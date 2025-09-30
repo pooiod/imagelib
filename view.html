@@ -409,6 +409,7 @@
     const mediaQuery = urlParams.get('media');
     const baseQuery = urlParams.get('base');
     const startingAutoplay = urlParams.has('autoplay');
+    const startingGalMode = urlParams.has('gallery');
     
     const unhappyFileSvg = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2U9IiM3NzciPjxwYXRoIGQ9Ik0xOCAxMiBINDAgTDQ2IDE4IFY1MCBIMTggWiIgZmlsbD0iI0ZGRiIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTTQwIDEyIFYxOCBINDYiIGZpbGw9Im5vbmUiLz48Y2lyY2xlIGN4PSIyMiIgY3k9IjI0IiByPSIxLjUiIGZpbGw9IiM3NzciLz48Y2lyY2xlIGN4PSIzMCIgY3k9IjI0IiByPSIxLjUiIGZpbGw9IiM3NzciLz48cGF0aCBkPSJNMjIgMzIgUTI2IDI4IDMwIDMyIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgZmlsbD0ibm9uZSIvPjwvc3ZnPg==";
 
@@ -441,7 +442,7 @@
       errorScreen.classList.add('hidden');
       images = mediaQuery.split(',').filter(img => img.trim() !== '');
       if (images.length > 0) {
-        if (window.innerWidth >= 768) {
+        if (startingGalMode) {
             enterGalleryMode();
         } else {
             enterImageViewer();
