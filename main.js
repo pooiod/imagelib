@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const galleries = document.querySelectorAll('gallery');
 
   var defaultStyle = document.createElement('style');
-  defaultStyle.textContent = `gallery { display: block; width: 500px; height: 300px; } gallery img { display:none !important; } gallery iframe { width: 100% !important; height 100% !important; border: none !important; }`;
+  defaultStyle.textContent = `gallery { display: block; width: 500px; height: 300px; } gallery img { display:none !important; width: 0px !important; height 0px !important; } gallery iframe { width: 100% !important; height 100% !important; border: none !important; }`;
   document.head.insertBefore(defaultStyle, document.head.firstChild);
 
   function updateGallery(gallery) {
