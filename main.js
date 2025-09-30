@@ -6,8 +6,6 @@ document.addEventListener('DOMContentLoaded', function() {
   document.head.insertBefore(defaultStyle, document.head.firstChild);
 
   galleries.forEach(gallery => {
-    const hasAutoplay = gallery.hasAttribute('autoplay');
-
     const images = gallery.querySelectorAll('img');
 
     const imageUrls = Array.from(images).map(img => img.src);
@@ -18,8 +16,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     let iframeSrc = `https://pooiod.github.io/imagelib/view.html?base=${encodeURIComponent(window.location.href)}`;
 
-    if (hasAutoplay) {
+    if (gallery.hasAttribute('autoplay')) {
       iframeSrc += '&autoplay';
+    }
+    if (gallery.hasAttribute('gallery')) {
+      iframeSrc += '&gallery';
+    }
+    if (gallery.hasAttribute('showtitles')) {
+      iframeSrc += '&showtitles';
     }
 
     iframeSrc += `&media=${imageUrls.map(url => encodeURIComponent(url)).join(',')}`;
