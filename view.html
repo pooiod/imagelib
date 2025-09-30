@@ -91,6 +91,31 @@
       from { transform: translateX(0) scale(1); opacity: 1; }
       to { transform: translateX(-100%) scale(0.8); opacity: 0.5; }
     }
+    
+    .image-title {
+      position: absolute;
+      top: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 12px;
+      z-index: 4;
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+      font-size: 1em;
+      max-width: 80%;
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      pointer-events: none;
+    }
+    
+    .image-title.active {
+      opacity: 1;
+    }
 
     .side-controls {
       position: absolute;
@@ -322,6 +347,7 @@
 <body>
 
   <div class="image-viewer" id="image-viewer">
+    <div class="image-title" id="image-title"></div>
     <div class="image-container" id="image-container"></div>
     <button class="side-controls" id="prev">
       <svg viewBox="0 0 24 24">
@@ -384,6 +410,7 @@
   <script>
     const imageViewer = document.getElementById('image-viewer');
     const imageContainer = document.getElementById('image-container');
+    const imageTitle = document.getElementById('image-title');
     const galleryMode = document.getElementById('gallery-mode');
     const errorScreen = document.getElementById('error-screen');
     const prevButton = document.getElementById('prev');
@@ -404,12 +431,14 @@
     let scale = 1, translateX = 0, translateY = 0;
     let isDragging = false, lastX = 0, lastY = 0;
     let lastTouchDistance = 0;
+    let titleTimeout = null;
 
     const urlParams = new URLSearchParams(window.location.search);
     const mediaQuery = urlParams.get('media');
     const baseQuery = urlParams.get('base');
     const startingAutoplay = urlParams.has('autoplay');
     const startingGalMode = urlParams.has('gallery');
+    const showImageTitles = urlParams.has('showtitles');
     
     const unhappyFileSvg = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2U9IiM3NzciPjxwYXRoIGQ9Ik0xOCAxMiBINDAgTDQ2IDE4IFY1MCBIMTggWiIgZmlsbD0iI0ZGRiIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTTQwIDEyIFYxOCBINDYiIGZpbGw9Im5vbmUiLz48Y2lyY2xlIGN4PSIyMiIgY3k9IjI0IiByPSIxLjUiIGZpbGw9IiM3NzciLz48Y2lyY2xlIGN4PSIzMCIgY3k9IjI0IiByPSIxLjUiIGZpbGw9IiM3NzciLz48cGF0aCBkPSJNMjIgMzIgUTI2IDI4IDMwIDMyIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgZmlsbD0ibm9uZSIvPjwvc3ZnPg==";
 
@@ -440,7 +469,16 @@
     if (mediaQuery) {
       imageViewer.classList.remove('hidden');
       errorScreen.classList.add('hidden');
-      images = mediaQuery.split(',').filter(img => img.trim() !== '');
+      images = mediaQuery.split(',')
+          .map(item => {
+              const parts = item.split('|');
+              return {
+                  src: parts[0].trim(),
+                  title: parts[1] ? parts[1].trim() : ''
+              };
+          })
+          .filter(img => img.src !== '');
+
       if (images.length > 0) {
         if (startingGalMode) {
             enterGalleryMode();
@@ -470,11 +508,26 @@
       applyTransform();
     }
 
+    function updateImageTitle(index) {
+        if (!showImageTitles) return;
+        clearTimeout(titleTimeout);
+        const title = images[index] ? images[index].title : '';
+        if (title) {
+            imageTitle.textContent = title;
+            imageTitle.classList.add('active');
+            titleTimeout = setTimeout(() => {
+                imageTitle.classList.remove('active');
+            }, 3000);
+        } else {
+            imageTitle.classList.remove('active');
+        }
+    }
+
     function renderImageViewer() {
       imageContainer.innerHTML = '';
-      images.forEach((src, index) => {
+      images.forEach((image, index) => {
         const img = document.createElement('img');
-        const resolvedSrc = resolveImageUrl(src);
+        const resolvedSrc = resolveImageUrl(image.src);
         if (resolvedSrc) {
             img.src = resolvedSrc;
         } else {
@@ -488,13 +541,14 @@
       });
       resetZoom();
       updateButtons();
+      updateImageTitle(currentIndex);
     }
     
     function renderGallery() {
         galleryMode.innerHTML = '';
-        images.forEach((src, index) => {
+        images.forEach((image, index) => {
             const img = document.createElement('img');
-            const resolvedSrc = resolveImageUrl(src);
+            const resolvedSrc = resolveImageUrl(image.src);
             if (resolvedSrc) {
                 img.src = resolvedSrc;
             } else {
@@ -618,6 +672,7 @@
         }
 
         currentImage.classList.remove('active');
+        updateImageTitle(newIndex);
 
         setTimeout(() => {
             currentImage.className = '';
