@@ -1,6 +1,10 @@
 document.addEventListener('DOMContentLoaded', function() {
   const galleries = document.querySelectorAll('gallery');
 
+  var defaultStyle = document.createElement('style');
+  defaultStyle.textContent = `gallary { display: block; width: 500px; height: 300px; }`;
+  document.head.insertBefore(defaultStyle, document.head.firstChild);
+
   galleries.forEach(gallery => {
     const hasAutoplay = gallery.hasAttribute('autoplay');
 
