@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ImageLib</title>
+    <script src="https://pooiod.github.io/imagelib/main.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #fff;
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin: 0;
+            color: #1877f2;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #606770;
+        }
+
+        main {
+            max-width: 960px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        section {
+            background-color: #fff;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+        }
+
+        h2 {
+            font-size: 2rem;
+            border-bottom: 2px solid #1877f2;
+            padding-bottom: 0.5rem;
+            margin-top: 0;
+        }
+
+        p {
+            line-height: 1.6;
+        }
+
+        code {
+            background-color: #f0f2f5;
+            padding: 0.2em 0.4em;
+            margin: 0;
+            font-size: 85%;
+            border-radius: 3px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        pre {
+            background-color: #f0f2f5;
+            padding: 1rem;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        
+        pre code {
+            padding: 0;
+            background-color: transparent;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: #606770;
+        }
+
+        footer a {
+            color: #1877f2;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>ImageLib</h1>
+        <p class="subtitle">A simple and lightweight image gallery for the web.</p>
+    </header>
+
+    <main>
+        <section id="about">
+            <h2>What it is</h2>
+            <p>ImageLib is a JavaScript library for creating beautiful and interactive image galleries on your website. It allows you to display a single image or a full gallery with features like autoplay, zoom, and scroll.</p>
+            <p>By default, it displays a single image, but you can easily enable the gallery view by adding the <code>gallery</code> attribute.</p>
+        </section>
+
+        <section id="how-to-use">
+            <h2>How to use</h2>
+            <p>To get started with ImageLib, simply include the main JavaScript file in the <code>&lt;head&gt;</code> of your HTML document:</p>
+            <pre><code>&lt;script src="https://pooiod.github.io/imagelib/main.js"&gt;&lt;/script&gt;</code></pre>
+            <p>Then, use the <code>&lt;gallery&gt;</code> custom element to wrap your images. You can enable autoplay by adding the <code>autoplay</code> attribute.</p>
+            <pre><code>&lt;gallery autoplay&gt;
+    &lt;img src="/images/image1.webp"&gt;
+    &lt;img src="/images/image2.png"&gt;
+    &lt;img src="/images/image3"&gt;
+&lt;/gallery&gt;</code></pre>
+            <p>ImageLib also lets the user zoom and scroll within the images for a more detailed view.</p>
+        </section>
+
+        <section id="example">
+            <h2>Example</h2>
+            <p>Here is a live example of ImageLib in action.</p>
+            <gallery autoplay>
+                <img src="/images/safespace.png">
+                <img src="/images/attic.png">
+                <img src="/images/nphMotionJpeg.png">
+                <img src="/images/geckosit.png">
+                <img src="/images/tree1.png">
+                <img src="/images/tree2.png">
+                <img src="/images/freakymart.png">
+                <img src="/images/duck.gif">
+            </gallery>
+        </section>
+    </main>
+
+    <footer>
+        <p>- A project by <a href="https://github.com/pooiod" target="_blank" style="color: inherit;" rel="noopener noreferrer">pooiod7</a></p>
+    </footer>
+</body>
+</html>
