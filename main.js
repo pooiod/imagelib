@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (gallery.hasAttribute('autoplay')) {
       iframeSrc += '&autoplay';
     }
-    if (gallery.hasAttribute('gallery')) {
+    if (gallery.hasAttribute('gallery') || gallery.hasAttribute('full')) {
       iframeSrc += '&gallery';
     }
     if (gallery.hasAttribute('showtitles')) {
