@@ -574,8 +574,7 @@
         }
 
         function updateImageTitle(index) {
-            console.log(images[index]);
-            const title = getTitleFromUrl(images[index]);
+            const title = images[index].title || getTitleFromUrl(images[index].src);
             if (showImageTitles && title) {
                 imageTitle.textContent = title;
                 imageTitle.classList.add('active');
