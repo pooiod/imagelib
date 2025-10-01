@@ -14,7 +14,7 @@ Include the main JavaScript file in the `<head>` of your HTML document:
 Wrap your images inside the `<gallery>` custom element. Enable autoplay with the `autoplay` attribute:
 
 ```html
-<gallery full>
+<gallery>
     <img src="/images/image1.webp">
     <img src="/images/image2.png">
     <img src="/images/image3">

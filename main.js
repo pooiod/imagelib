@@ -19,8 +19,8 @@ document.addEventListener('DOMContentLoaded', function() {
     if (gallery.hasAttribute('autoplay')) {
       iframeSrc += '&autoplay';
     }
-    if (gallery.hasAttribute('gallery') || gallery.hasAttribute('full')) {
-      iframeSrc += '&gallery';
+    if (gallery.hasAttribute('single')) {
+      iframeSrc += '&single';
     }
     if (gallery.hasAttribute('showtitles')) {
       iframeSrc += '&showtitles';
