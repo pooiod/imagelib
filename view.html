@@ -554,8 +554,27 @@
             applyTransform();
         }
 
+        function getTitleFromUrl(url) {
+            try {
+                const path = new URL(url).pathname;
+                const lastPart = path.substring(path.lastIndexOf('/') + 1);
+                return decodeURIComponent(lastPart);
+            } catch (error) {
+                const parts = url.split('/');
+                const lastPart = parts.pop() || parts.pop();
+                if (lastPart) {
+                    try {
+                        return decodeURIComponent(lastPart);
+                    } catch (e) {
+                        return lastPart;
+                    }
+                }
+                return '';
+            }
+        }
+
         function updateImageTitle(index) {
-            const title = images[index] ? images[index].title : '';
+            const title = getTitleFromUrl(images[index]);
             if (showImageTitles && title) {
                 imageTitle.textContent = title;
                 imageTitle.classList.add('active');
