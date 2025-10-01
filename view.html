@@ -470,6 +470,7 @@
         const zoomInButton = document.getElementById('zoom-in');
         const zoomOutButton = document.getElementById('zoom-out');
         const recenterButton = document.getElementById('recenter');
+        var titleTimeout = null;
 
         let images = [];
         let currentIndex = 0;
@@ -576,10 +577,15 @@
         function updateImageTitle(index) {
             const title = images[index].title || getTitleFromUrl(images[index].src);
             if (showImageTitles && title) {
+                clearTimeout(titleTimeout);
                 imageTitle.textContent = title;
                 imageTitle.classList.add('active');
+                titleTimeout = setTimeout(() => {
+                    imageTitle.classList.remove('active');
+                }, 1000);
             } else {
                 imageTitle.classList.remove('active');
+                clearTimeout(titleTimeout);
             }
         }
 
