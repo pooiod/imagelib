@@ -8,9 +8,17 @@ document.addEventListener('DOMContentLoaded', function() {
   galleries.forEach(gallery => {
     const images = gallery.querySelectorAll('img');
 
-    const imageUrls = Array.from(images).map(img => img.src);
+    const mediaData = Array.from(images).map(img => {
+      const url = img.src;
+      const title = img.getAttribute('title');
+      if (title) {
+        return `${url}|${title}`;
+      } else {
+        return `${url}`;
+      }
+    });
 
-    if (imageUrls.length === 0) {
+    if (mediaData.length === 0) {
       return;
     }
 
@@ -26,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
       iframeSrc += '&showtitles';
     }
 
-    iframeSrc += `&media=${imageUrls.map(url => encodeURIComponent(url)).join(',')}`;
+    iframeSrc += `&media=${mediaData.map(item => encodeURIComponent(item)).join(',')}`;
 
     const iframe = document.createElement('iframe');
     iframe.src = iframeSrc;
